@@ -1,5 +1,5 @@
 pipeline{
-        agent docker
+        agent any
         environment {
             app_version = 'v1'
             rollback = 'false'
