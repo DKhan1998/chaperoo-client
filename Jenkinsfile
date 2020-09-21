@@ -1,5 +1,5 @@
 pipeline{
-        agent any
+        agent docker
         environment {
             app_version = 'v1'
             rollback = 'false'
@@ -8,7 +8,7 @@ pipeline{
             stage('Build Image'){
                 steps{
                     script{
-                        if (env.rollback === 'false'){
+                        if (environment.rollback == 'false'){
                             image = docker.build("dkhan20/chaperoo-frontend")
                         }
                     }
@@ -17,7 +17,7 @@ pipeline{
             stage('Tag & Push Image'){
                 steps{
                     script{
-                        if (env.rollback === 'false'){
+                        if (environment.rollback == 'false'){
                             docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                                 image.push("${env.app_version}")
                             }
